@@ -17,7 +17,19 @@
         <h3>Available Activities</h3>
         <div id="activities-list">
           <!-- Activities will be loaded here -->
-          <p>Loading activities...</p>
+          <div class="activity-card">
+            <h4>Activity Title</h4>
+            <p>Activity description goes here.</p>
+            <!-- Participants section -->
+            <div class="participants">
+              <h5>Participants</h5>
+              <ul>
+                <li>Participant 1</li>
+                <li>Participant 2</li>
+                <li>Participant 3</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -35,6 +47,8 @@
               <!-- Activity options will be loaded here -->
             </select>
           </div>
+          <!-- Hidden input to store registered emails -->
+          <input type="hidden" id="registered-emails" value="" />
           <button type="submit">Sign Up</button>
         </form>
         <div id="message" class="hidden"></div>
@@ -46,5 +60,24 @@
     </footer>
 
     <script src="app.js"></script>
+    <script>
+      document.getElementById('signup-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const email = document.getElementById('email').value;
+        const activity = document.getElementById('activity').value;
+        const registeredEmails = document.getElementById('registered-emails').value.split(',');
+
+        if (registeredEmails.includes(email)) {
+          document.getElementById('message').textContent = 'You are already registered for this activity.';
+          document.getElementById('message').classList.remove('hidden');
+        } else {
+          registeredEmails.push(email);
+          document.getElementById('registered-emails').value = registeredEmails.join(',');
+          document.getElementById('message').textContent = 'Successfully registered!';
+          document.getElementById('message').classList.remove('hidden');
+          // Add logic to update the participants list and other necessary updates
+        }
+      });
+    </script>
   </body>
 </html>
